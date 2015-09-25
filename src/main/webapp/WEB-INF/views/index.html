@@ -1,0 +1,31 @@
+<!-- 头部 -->
+@layout("/layout/header.html"){
+	<link rel="stylesheet" href="${ctxPath!}/static/ztree/metro.css" />
+	<link rel="stylesheet" href="${ctxPath}/static/validate/css/validform.css" />
+	<link rel="stylesheet" href="${ctxPath!}/static/css/custom.css" />
+@}
+
+<!-- 顶部条 -->
+@layout("/layout/navbar.html"){}
+
+<!-- 主体 -->
+@layout("/layout/main.html",{menuList:menuList!}){
+	<div id="fill-main-content" style="height:100%">
+	<h1>爬虫、微信、工作流后续开展</h1>
+	</div>
+@}
+
+<!-- 底部 -->
+@layout("/layout/footer.html"){
+	<script src="${ctxPath!}/static/js/history.js"></script>
+	<script type="text/javascript" src="${ctxPath!}/static/layer/layer.min.js"></script>
+	<script type="text/javascript" src="${ctxPath!}/static/js/spin.min.js"></script>
+	<script type="text/javascript" src="${ctxPath!}/static/ztree/jquery.ztree.all-3.5.min.js"></script>
+	<script type="text/javascript" src="${ctxPath!}/static/js/jquery.autosize.min.js"></script>
+	<script type="text/javascript" src="${ctxPath!}/static/chosen/chosen.jquery.min.js"></script>
+	<script type="text/javascript" src="${ctxPath}/static/validate/Validform_v5.3.2_min.js"></script>
+	<script type="text/javascript" src="${ctxPath}/static/js/jquery.form.js"></script>
+	<script type="text/javascript" src="${ctxPath}/static/js/bootstrap-contextmenu.js"></script>
+	<script type="text/javascript" src="${ctxPath}/static/js/jquery.nicescroll.min.js"></script>
+	<script type="text/javascript" src="${ctxPath}/static/js/public.js"></script>
+@}		

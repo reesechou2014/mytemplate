@@ -1,0 +1,32 @@
+@for(menu in para0){
+	<li data-level="${menu.level!}">
+	
+		<a 
+			@if(menu.hasChild){
+				href="javascript:void(0);" class="dropdown-toggle" 
+				 haschild="${menu.hasChild}"
+			@}else if(!isEmpty(menu.url)){
+				href="${decode(menu.url,'','javascript:void(0);','#/ajax/'+menu.url)}" 
+				id="menu_${strutil.replace(menu.url!'','/','')}" 
+				haschild="${menu.hasChild!}"
+			@}
+		>
+			<i class="menu-icon ${menu.icon!'fa-caret-right'}"></i>
+			<span class="menu-text" 
+			@if(menu.level == 1) {
+				style="vertical-align: middle;"
+			@}
+			> ${menu.name!} </span>
+			@if(menu.hasChild){
+			<b class="arrow fa fa-angle-down"></b>
+			@}
+		</a>
+		<b class="arrow"></b>
+		
+		@if(menu.hasChild){
+		<ul class="submenu nav-hide" style="display:none;">
+			@menuTree(menu.children!);
+		</ul>
+		@}
+	</li>
+@}elsefor{}

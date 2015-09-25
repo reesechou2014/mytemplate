@@ -1,0 +1,22 @@
+<div class="wordbreak">
+<b>Thread Count: </b>${@tm.getThreadCount()}<br>
+<b>Started Thread Count: </b>${@tm.getTotalStartedThreadCount()}<br>
+<b>thread contention monitoring is enabled? </b>${@tm.isThreadContentionMonitoringEnabled()}<br>
+<b>if the Java virtual machine supports thread contention monitoring? </b>${@tm.isThreadContentionMonitoringSupported()}<br>
+<b>thread CPU time measurement is enabled? </b>${@tm.isThreadCpuTimeEnabled()}<br>
+<b>if the Java virtual machine implementation supports CPU time measurement for any thread? </b>${@tm.isThreadCpuTimeSupported()}<br>
+</div>
+<hr>
+@for(map in list){
+	<b>Thread ID: </b>${map.id}<br>
+	<b>Thread Name: </b>${map.threadName}<br>
+	<b>Thread State: </b>${map.threadState}<br>
+	<b>Thread Lock Name: </b>${map.lockName}<br>
+	<b>Thread Lock Owner Name: </b>${map.lockOwnerName}<br>
+	<b>Thread CPU Time: </b>${map.cpuTime} sec<br>
+	<b>Stack Info: (depth:${map.depth})</b><br>
+	@for(ste in map.stes){
+		&nbsp;&nbsp;&nbsp;&nbsp;+${ste}
+	@}
+<hr>
+@}	

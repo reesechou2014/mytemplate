@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gohuinuo.web.sys.mapper.SysAreaMapper">
+
+	<sql id="sysAreaColumns">
+		id,code,create_by,create_date,del_flag,name,parent_id,parent_ids,
+		remarks,type,update_by,update_date,icon
+	</sql>
+	<sql id="sysAreaAliasColumns">
+		a.id,a.code,a.create_by,a.create_date,a.del_flag,a.name,a.parent_id,a.parent_ids,
+		a.remarks,a.type,a.update_by,a.update_date,a.icon
+	</sql>
+	
+	<!-- 修改父节点字符串 -->
+	<update id="updateParentIds">
+		update sys_area
+		set parent_ids = REPLACE(parent_ids, #{oldParentIds}, #{parentIds}) 
+		where parent_ids like CONCAT( '%,' , #{id} , ',%' )  
+	</update>
+	
+	<!-- 根据节点Id删除底下全部子节点包括孙子节点 -->
+	<update id="deleteAreaByRootId">
+		update sys_area set del_flag = 1 where FIND_IN_SET(#{id},parent_ids) or id = #{id}
+	</update>
+	
+	<!-- 分页显示筛选查询 -->
+	<select id="findSysAreaList" resultType="com.gohuinuo.web.sys.model.SysArea">
+		select <include refid="sysAreaAliasColumns"/>,a2.name pname,a2.id pid
+		from sys_area a
+		left join sys_area a2
+		ON a.parent_id=a2.id
+		<where>
+			<if test="@Ognl@isNotBlank(name)">
+				a.name like concat( '%' , #{name} , '%' )
+			</if>
+			<if test="id != 0 and @Ognl@isBlank(name) and @Ognl@isNotBlank(id) "> 
+				(FIND_IN_SET(#{id},a.parent_ids) or a.id = #{id})
+			</if>
+			and a.del_flag = 0
+		</where>
+		ORDER BY a.update_date desc
+	</select>
+
+</mapper>

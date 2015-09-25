@@ -1,0 +1,74 @@
+<div class="layer">
+<div class="profile-user-info profile-user-info-striped wordbreak" >
+	<div class="profile-info-row">
+		<div class="profile-info-name">ID</div>
+		<div class="profile-info-value">${sysResource.id!}</div>
+	</div>
+	<div class="profile-info-row">
+		<div class="profile-info-name">名称</div>
+		<div class="profile-info-value">${sysResource.name!}</div>
+	</div>
+	<div class="profile-info-row">
+		<div class="profile-info-name">url</div>
+		<div class="profile-info-value">${sysResource.url!}</div>
+	</div>
+	<div class="profile-info-row">
+		<div class="profile-info-name">权限码(code)</div>
+		<div class="profile-info-value">${sysResource.code!}</div>
+	</div>
+	<div class="profile-info-row">
+		<div class="profile-info-name">权限位(pos)</div>
+		<div class="profile-info-value">${sysResource.pos!}</div>
+	</div>
+	<div class="profile-info-row">
+		<div class="profile-info-name">资源类型</div>
+		<div class="profile-info-value">${decode(sysResource.type,'0','菜单资源','按钮资源')}</div>
+	</div>
+	<div class="profile-info-row">
+		<div class="profile-info-name">权限类型</div>
+		<div class="profile-info-value">${decode(sysResource.common,'0','权限','公共')}</div>
+	</div>
+	<div class="profile-info-row">
+		<div class="profile-info-name">图标</div>
+		<div class="profile-info-value">
+			<i class="ace-icon ${sysResource.icon!} blue bigger-120"></i>
+		</div>
+	</div>
+	<div class="profile-info-row">
+		<div class="profile-info-name">排序号</div>
+		<div class="profile-info-value">${sysResource.sort!}</div>
+	</div>
+	<div class="profile-info-row">
+		<div class="profile-info-name">状态</div>
+		<div class="profile-info-value">${decode(sysResource.status!,'0','正常','禁用')}</div>
+	</div>
+	<div class="profile-info-row">
+		<div class="profile-info-name">父级ID</div>
+		<div class="profile-info-value">${pResource.id!}</div>
+	</div>
+	<div class="profile-info-row">
+		<div class="profile-info-name">父级名称</div>
+		<div class="profile-info-value">${pResource.name!}</div>
+	</div>
+	<div class="profile-info-row">
+		<div class="profile-info-name">创建者</div>
+		<div class="profile-info-value">${sysResource.createBy!}</div>
+	</div>
+	<div class="profile-info-row">
+		<div class="profile-info-name">创建时间</div>
+		<div class="profile-info-value">${sysResource.createDate!}</div>
+	</div>
+	<div class="profile-info-row">
+		<div class="profile-info-name">更新者</div>
+		<div class="profile-info-value">${sysResource.updateBy!}</div>
+	</div>
+	<div class="profile-info-row">
+		<div class="profile-info-name">更新时间</div>
+		<div class="profile-info-value">${sysResource.updateDate!}</div>
+	</div>
+	<div class="profile-info-row">
+		<div class="profile-info-name">描述</div>
+		<div class="profile-info-value">${sysResource.description!}</div>
+	</div>
+</div>
+</div>

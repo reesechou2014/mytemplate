@@ -1,0 +1,53 @@
+<div class="layer">
+	<form name="FormPost" id="dict-save" class="FormGrid"  method="post"
+		action="${ctxPath}/dict/save">
+		
+		<input type="hidden" value="${dict.id!}" name="id"/>
+		<table class="EditTable" width="100%">
+			<tbody>
+				<tr style="display: none;">
+					<td class="ui-state-error" id="FormError"></td>
+				</tr>
+				<tr class="FormData">
+					<td class="CaptionTD">标签</td>
+					<td class="DataTD width-100"><input type="text"
+						name="label" datatype="*"  nullmsg="请输入标签！"
+						value="${dict.label!}"></td>
+				</tr>
+				<tr class="FormData">
+					<td class="CaptionTD">键值</td>
+					<td class="DataTD width-100"><input type="text"
+						name="value" datatype="*"  nullmsg="请输入键值！"
+						value="${dict.value!}"></td>
+				</tr>
+				<tr class="FormData">
+					<td class="CaptionTD">类型</td>
+					<td class="DataTD width-100">
+					<input type="text" value="${dict.type!}" name="type"/>
+					</td>
+				</tr>
+				<tr class="FormData">
+					<td class="CaptionTD">排序</td>
+					<td class="DataTD">
+					<input type="text" value="${dict.sort!}" name="sort"/>
+					</td>
+				</tr>
+				<tr class="FormData">
+					<td class="CaptionTD">描述</td>
+					<td class="DataTD">
+						<textarea name="description" class="autosize-transition form-control "
+						style="resize: none;">${dict.description!}</textarea>	
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</form>
+</div>
+<#save formId="dict-save" />
+
+<script type="text/javascript">
+
+//描述框自动扩张高度
+$('textarea[class*=autosize]').autosize({append: "\n"});
+
+</script>

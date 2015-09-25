@@ -1,0 +1,78 @@
+<div class="layer">
+<div class="profile-user-info profile-user-info-striped" >
+	<div class="profile-info-row">
+		<div class="profile-info-name">角色名称</div>
+		<div class="profile-info-value">
+			${sysrole.name!}
+		</div>
+	</div>
+	<div class="profile-info-row">
+		<div class="profile-info-name">归属机构</div>
+		<div class="profile-info-value">
+			@var roleOffice = office.getOfficeStrByOfficeId(sysrole.officeId);
+			@if(!isEmpty(roleOffice)){
+			&nbsp;(${roleOffice})
+			@}
+		</div>
+	</div>
+	<div class="profile-info-row">
+		<div class="profile-info-name">数据范围</div>
+		<div class="profile-info-value">
+			${dict.getDictByTypeAndValue("sys_data_scope",sysrole.dataScope).label}
+		</div>
+	</div>
+	<div class="profile-info-row">
+		<div class="profile-info-name">分配的人员</div>
+		<div class="profile-info-value">
+			@for(user in users){
+				<a href="javascript:void(0);" title="<${user.name!}>详情"
+					data-title="<${user.name!}>详情" data-mode="detail"
+					data-url="${ctxPath}/sysuser/detail/showlayer"
+					data-data="{id:'${user.id}'}"
+				>${user.name!}
+					${decode(userLP.last,false,'，','')}
+				</a>
+			@}
+		</div>
+	</div>
+	<div class="profile-info-row">
+		<div class="profile-info-name">拥有的权限</div>
+		<div class="profile-info-value">
+				@for(resource in resources){
+					${resource.name!}
+					${decode(resourceLP.last,false,'，','')}
+				@}
+		</div>
+	</div>
+	<div class="profile-info-row">
+		<div class="profile-info-name">创建者</div>
+		<div class="profile-info-value">
+			${sysrole.createBy!}
+		</div>
+	</div>
+	<div class="profile-info-row">
+		<div class="profile-info-name">创建时间</div>
+		<div class="profile-info-value">
+			${sysrole.createDate!}
+		</div>
+	</div>
+	<div class="profile-info-row">
+		<div class="profile-info-name">更新者</div>
+		<div class="profile-info-value">
+			${sysrole.updateBy!}
+		</div>
+	</div>
+	<div class="profile-info-row">
+		<div class="profile-info-name">更新时间</div>
+		<div class="profile-info-value">
+			${sysrole.updateDate!}
+		</div>
+	</div>
+	<div class="profile-info-row">
+		<div class="profile-info-name">描述</div>
+		<div class="profile-info-value">
+			${sysrole.description!}
+		</div>
+	</div>
+</div>
+</div>

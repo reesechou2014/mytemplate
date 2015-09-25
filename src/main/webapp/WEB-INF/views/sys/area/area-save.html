@@ -1,0 +1,70 @@
+<div class="layer">
+	<form name="FormPost" id="area-save" class="FormGrid"  method="post"
+		action="${ctxPath}/area/save" >
+		
+		<input type="hidden" value="${area.id!}" name="id"/>
+		<input type="hidden" value="${pArea.parentIds!}" name="parentIds" />
+		<input type="hidden" value="${area.parentIds!}" name="oldParentIds" />
+		<table class="EditTable" width="100%">
+			<tbody>
+				<tr style="display: none;">
+					<td class="ui-state-error" id="FormError"></td>
+				</tr>
+				<tr class="FormData">
+					<td class="CaptionTD">区域名称</td>
+					<td class="DataTD width-100"><input type="text"
+						name="name" datatype="*"  nullmsg="请输入区域名称！"
+						value="${area.name!}"></td>
+				</tr>
+				<tr class="FormData">
+					<td class="CaptionTD">区域编码</td>
+					<td class="DataTD width-100"><input type="text"
+						name="code" datatype="*"  nullmsg="请输入区域编码！"
+						value="${area.code!}"></td>
+				</tr>
+				<tr class="FormData">
+					<td class="CaptionTD">区域类型</td>
+					<td class="DataTD width-100">
+					@var areaList = dict.getDictListByType("sys_area_type");
+					<#select name="type">
+						@for(item in areaList){
+							<option value="${item.value!}" ${decode(item.value,area.type!,"selected","")}>
+							${item.label!}
+							</option>
+						@}
+					</#select>
+					</td>
+				</tr>
+				<tr class="FormData">
+					<td class="CaptionTD">上级区域</td>
+					<td class="DataTD">
+					<#treeselect url="area/tree" modelNameValue="${pArea.name!}" 
+							modelIdValue="${pArea.id!0}" selectIds="${pArea.id!}"
+							curId="${area.id!}" />
+					</td>
+				</tr>
+				<tr class="FormData">
+					<td class="CaptionTD">区域图标</td>
+					<td class="DataTD">
+					<#iconselect value="${area.icon!}"/>
+					</td>
+				</tr>
+				<tr class="FormData">
+					<td class="CaptionTD">区域描述</td>
+					<td class="DataTD">
+						<textarea name="remarks" class="autosize-transition form-control "
+						style="resize: none;">${sysResource.remarks!}</textarea>	
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</form>
+</div>
+<#save formId="area-save" />
+
+<script type="text/javascript">
+
+//描述框自动扩张高度
+$('textarea[class*=autosize]').autosize({append: "\n"});
+
+</script>

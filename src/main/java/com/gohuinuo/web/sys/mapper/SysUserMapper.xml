@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gohuinuo.web.sys.mapper.SysUserMapper">
+
+	<sql id="sysUserColumns">
+		id,company_id,create_by,create_date,del_flag,email,login_date,login_ip,mobile,
+		name,no,office_id,password,phone,remarks,update_by,update_date,username,user_type
+	</sql>
+	
+	<!-- 用户列表 -->
+	<select id="findPageInfo" resultType="com.gohuinuo.web.sys.model.SysUser">
+		SELECT su.id,su.name,su.mobile,su.email,su.no,su.login_ip,su.login_date,
+			su.company_id,su.office_id,GROUP_CONCAT(sr.name SEPARATOR ' | ') roles 
+		FROM sys_user su 
+		LEFT JOIN sys_user_role sur ON su.id = sur.user_id 
+		LEFT JOIN sys_role sr ON sur.role_id = sr.id
+		LEFT JOIN sys_office so ON so.id = su.office_id
+		<where>
+			<if test="officeId!=0 and officeType==1 ">
+				su.company_id = #{officeId}
+			</if>
+			<if test="officeId!=0 and officeType==2 ">
+				and su.office_id = #{officeId}
+			</if>
+			<if test="@Ognl@isNotBlank(name)">
+				and su.name like concat('%', #{name} ,'%')
+			</if>
+			<if test="@Ognl@isNotBlank(no)">
+				and su.no like concat('%', #{no} ,'%')
+			</if>
+			<if test="@Ognl@isNotBlank(roles)">
+				and FIND_IN_SET(sr.id,#{roles})
+			</if>
+			<if test="@Ognl@isNotBlank(userDataScope)">
+				and ${userDataScope}
+			</if>
+			<if test="@Ognl@isNotBlank(userType) and userType!=1">
+				and user_type != 1
+			</if>
+			and su.del_flag = 0 
+		</where>
+		GROUP BY su.id ORDER BY su.update_date desc
+	</select>
+
+</mapper>

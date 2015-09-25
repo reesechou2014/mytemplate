@@ -1,0 +1,9 @@
+@@java.lang.management.ManagementFactory.getMemoryMXBean().gc();
+@var init = @java.lang.management.ManagementFactory.getMemoryMXBean().getHeapMemoryUsage().getInit();
+@var max = @java.lang.management.ManagementFactory.getMemoryMXBean().getHeapMemoryUsage().getMax();
+@var used = @java.lang.management.ManagementFactory.getMemoryMXBean().getHeapMemoryUsage().getUsed();
+<div class="wordbreak">
+<b>Init Memory: </b>${init/1000000}M<br>
+<b>MAX Memory: </b>${max/1000000}M<br>
+<b>Used Memory: </b>${used/1000000}M<br>
+</div>

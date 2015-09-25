@@ -1,0 +1,58 @@
+
+<table class="table table-striped table-bordered table-hover">
+	<thead class="thin-border-bottom">
+		<tr>
+			<th class="center">缓存名称</th>
+			<th class="center">读取总命中率</th>
+			<th class="center">读取命中次数</th>
+			<th class="center">读取失效次数</th>
+			<th class="center">内存中对象数</th>
+			<th class="center">硬盘中对象数</th>
+			<th class="center">内存中占用(KB)</th>
+			<th class="center">详情</th>
+		</tr>
+	</thead>
+
+	<tbody>
+	@var cacheNames = @ehcacheManager.getCacheNames();
+	@for(cacheName in cacheNames){
+		@var cache = @ehcacheManager.getCache(cacheName);
+		@var statistics = @cache.getStatistics();
+		@var cacheHitCount = @statistics.cacheHitCount();
+		@var cacheMissCount = @statistics.cacheMissCount();
+		@var totalCount = cacheHitCount + cacheMissCount;
+		@totalCount = totalCount >0?totalCount:1;
+		@var cacheHitPercent = cacheHitCount * 1.0 / totalCount;
+		@var localHeapCount = @statistics.getLocalHeapSize();
+		@var localDiskCount = @statistics.getLocalDiskSize();
+		@var localHeapSize = @statistics.getLocalHeapSizeInBytes();
+		<tr>
+			<td class="center">${cacheName}</td>
+			<td class="center">${trunc(cacheHitPercent,3)}</td>
+			<td class="center">${cacheHitCount}</td>
+			<td class="center">${cacheMissCount}</td>
+			<td class="center">${localHeapCount}</td>
+			<td class="center">${localDiskCount}</td>
+			<td class="center">${trunc(localHeapSize/1024,2)}</td>
+			<td class="center">
+				<div class="hidden-sm hidden-xs action-buttons">
+					<a class="blue" href="javascript:;"
+						data-title="${cacheName}缓存的对象列表" data-mode="detail"
+						data-url="${ctxPath}/monitor/ehcache/${cacheName}/detail"
+						data-width="30%">
+						<i class="ace-icon fa fa-search-plus bigger-130"></i>
+					</a>
+					<a class="red" href="javascript:void(0);" title="清空全部缓存" id="delcache"
+						data-mode="del" 
+						data-title="删除操作" 
+						data-msg="你确定全部清空此缓存吗?" 
+						data-url="${ctxPath}/monitor/ehcache/${cacheName}/clear">
+							<i class="ace-icon fa fa-trash-o bigger-130"></i>
+					</a>
+				</div>
+			</td>
+		</tr>
+	@}
+	</tbody>
+</table>
+

@@ -1,0 +1,109 @@
+<div class="layer">
+	<form name="FormPost" id="area-save" class="FormGrid"  method="post"
+		action="${ctxPath}/office/save">
+		
+		<input type="hidden" value="${office.id!}" name="id"/>
+		<input type="hidden" value="${pOffice.parentIds!}" name="parentIds" />
+		<input type="hidden" value="${office.parentIds!}" name="oldParentIds" />
+		<table class="EditTable" width="100%">
+			<tbody>
+				<tr style="display: none;">
+					<td class="ui-state-error" id="FormError"></td>
+				</tr>
+				<tr class="FormData">
+					<td class="CaptionTD">机构名称</td>
+					<td class="DataTD width-100"><input type="text"
+						name="name" datatype="*"  nullmsg="请输入机构名称！"
+						value="${office.name!}"></td>
+				</tr>
+				<tr class="FormData">
+					<td class="CaptionTD">机构类型</td>
+					<td class="DataTD width-100">
+					@var officeList = dict.getDictListByType("sys_office_type");
+					<#select name="type">
+						@for(item in officeList){
+							<option value="${item.value!}" ${decode(item.value,office.type!,"selected","")}>
+							${item.label!}
+							</option>
+						@}
+					</#select>
+					</td>
+				</tr>
+				<tr class="FormData">
+					<td class="CaptionTD">上级机构</td>
+					<td class="DataTD width-100">
+					<#treeselect url="office/tree" modelNameValue="${pOffice.name!}" 
+							modelIdValue="${pOffice.id!0}" selectIds="${pOffice.id!}"
+							nameId="poffice" id="poffice_id" curId="${office.id!}" />
+					</td>
+				</tr>
+				<tr class="FormData">
+					<td class="CaptionTD">归属区域</td>
+					<td class="DataTD">
+					<#treeselect url="area/tree" modelNameValue="${area.name!}" 
+							modelIdValue="${area.id!''}" selectIds="${area.id!}"
+							modelId="areaId" nameId="area" id="area_id"
+							isCheck="请选择归属区域"/>
+					</td>
+				</tr>
+				<tr class="FormData">
+					<td class="CaptionTD">区域图标</td>
+					<td class="DataTD">
+					<#iconselect value="${office.icon!}"/>
+					</td>
+				</tr>
+				<tr class="FormData">
+					<td class="CaptionTD">负责人</td>
+					<td class="DataTD width-100">
+					<input type="text" name="master" value="${office.master!}">
+					</td>
+				</tr>
+				<tr class="FormData">
+					<td class="CaptionTD">电话</td>
+					<td class="DataTD width-100">
+					<input type="text" name="phone" value="${office.phone!}">
+					</td>
+				</tr>
+				<tr class="FormData">
+					<td class="CaptionTD">邮箱</td>
+					<td class="DataTD width-100">
+					<input type="text" name="email" value="${office.email!}">
+					</td>
+				</tr>
+				<tr class="FormData">
+					<td class="CaptionTD">联系地址</td>
+					<td class="DataTD width-100">
+					<input type="text" name="address" value="${office.address!}">
+					</td>
+				</tr>
+				<tr class="FormData">
+					<td class="CaptionTD">邮政编码</td>
+					<td class="DataTD width-100">
+					<input type="text" name="zip_code" value="${office.zip_code!}">
+					</td>
+				</tr>
+				<tr class="FormData">
+					<td class="CaptionTD">传真</td>
+					<td class="DataTD width-100">
+					<input type="text" name="fax" value="${office.fax!}">
+					</td>
+				</tr>
+				<tr class="FormData">
+					<td class="CaptionTD">机构描述</td>
+					<td class="DataTD">
+						<textarea name="remarks" class="autosize-transition form-control "
+						style="resize: none;">${office.remarks!}</textarea>	
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</form>
+</div>
+<#save formId="area-save" />
+
+<script type="text/javascript">
+
+//描述框自动扩张高度
+$('textarea[class*=autosize]').autosize({append: "\n"});
+
+</script>

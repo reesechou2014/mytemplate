@@ -1,0 +1,309 @@
+<style>
+#edit-info .center>label{width: 100px;text-align: right;}
+</style
+<div id="user-profile-2" class="user-profile">
+	<div class="tabbable">
+		<ul class="nav nav-tabs padding-18">
+			<li class="active"><a data-toggle="tab" href="#home"> <i
+					class="green ace-icon fa fa-file-o bigger-120"></i> 我的资料
+			</a>
+			</li>
+			<li class=""><a data-toggle="tab" href="#edit-info"> <i
+					class="green ace-icon fa fa-pencil bigger-120"></i> 修改资料
+			</a>
+			</li>
+		</ul>
+
+		<div class="tab-content no-border padding-24">
+			<div id="home" class="tab-pane active">
+				<div class="row">
+					<div class="col-xs-12 col-sm-3 center">
+						<span class="profile-picture"> <img
+							class="editable img-responsive" alt="Alex's Avatar" id="avatar2"
+							src="${ctxPath}/static/img/big-male-pic.jpg">
+						</span>
+
+						<div class="space space-4"></div>
+
+						<a href="#" class="btn btn-sm btn-block btn-success"> <i
+							class="ace-icon fa fa-plus-circle bigger-120"></i> <span
+							class="bigger-110">添加好友</span>
+						</a> 
+						<a href="javascript:;" class="btn btn-sm btn-block btn-primary"
+							data-title="聊天" data-mode="detail"
+							data-url="${ctxPath}/userCenter/conversation"
+							data-width="100%" data-height="100%"
+						> 
+						<i class="ace-icon fa fa-envelope-o bigger-110"></i> 
+							<span class="bigger-110">发送消息</span>
+						</a>
+					</div>
+					<!-- /.col -->
+
+					<div class="col-xs-12 col-sm-9">
+						<h4 class="blue">
+							<span class="middle">${sysUser.name!}</span>
+						</h4>
+
+						<div class="profile-user-info">
+							<div class="profile-info-row">
+								<div class="profile-info-name">登录名</div>
+
+								<div class="profile-info-value">
+									<span>${sysUser.username!}</span>
+								</div>
+							</div>
+
+							<div class="profile-info-row">
+								<div class="profile-info-name">所属机构</div>
+
+								<div class="profile-info-value">
+									<i class="fa fa-map-marker light-orange bigger-110"></i>
+									<span>${sysUser.orgStr!}</span>
+								</div>
+							</div>
+							
+							<div class="profile-info-row">
+								<div class="profile-info-name">电话</div>
+
+								<div class="profile-info-value">
+									<span>${sysUser.phone!}</span>
+								</div>
+							</div>
+
+							<div class="profile-info-row">
+								<div class="profile-info-name">手机</div>
+
+								<div class="profile-info-value">
+									<span>${sysUser.mobile!}</span>
+								</div>
+							</div>
+							
+							<div class="profile-info-row">
+								<div class="profile-info-name">邮箱</div>
+
+								<div class="profile-info-value">
+									<span>${sysUser.email!}</span>
+								</div>
+							</div>
+							
+							<div class="profile-info-row">
+								<div class="profile-info-name">工号</div>
+
+								<div class="profile-info-value">
+									<span>${sysUser.no!}</span>
+								</div>
+							</div>
+
+							<div class="profile-info-row">
+								<div class="profile-info-name">最后登录IP</div>
+
+								<div class="profile-info-value">
+									<span>${sysUser.loginIp!}</span>
+									<label class="red">${sysUser.ipEx!}</label>
+								</div>
+							</div>
+
+							<div class="profile-info-row">
+								<div class="profile-info-name">最后登录时间</div>
+
+								<div class="profile-info-value">
+									<span>${sysUser.loginDate!,dateFormat="yyyy-MM-dd HH:mm:ss"}</span>
+								</div>
+							</div>
+						</div>
+
+					</div>
+					<!-- /.col -->
+				</div>
+				<!-- /.row -->
+
+				<div class="space-20"></div>
+
+				<div class="row">
+					<div class="col-xs-12 col-sm-6">
+						<div class="widget-box transparent">
+							<div class="widget-header widget-header-small">
+								<h4 class="widget-title smaller">
+									<i class="ace-icon fa fa-check-square-o bigger-110"></i> Little
+									About Me
+								</h4>
+							</div>
+
+							<div class="widget-body">
+								<div class="widget-main">
+									<p>My job is mostly lorem ipsuming and dolor sit ameting as
+										long as consectetur adipiscing elit.</p>
+									<p>Sometimes quisque commodo massa gets in the way and sed
+										ipsum porttitor facilisis.</p>
+									<p>The best thing about my job is that vestibulum id ligula
+										porta felis euismod and nullam quis risus eget urna mollis
+										ornare.</p>
+									<p>Thanks for visiting my profile.</p>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-xs-12 col-sm-6">
+						<div class="widget-box transparent">
+							<div class="widget-header widget-header-small header-color-blue2">
+								<h4 class="widget-title smaller">
+									<i class="ace-icon fa fa-lightbulb-o bigger-120"></i> My Skills
+								</h4>
+							</div>
+
+							<div class="widget-body">
+								<div class="widget-main padding-16">
+									<div class="clearfix">
+										<div class="grid3 center">
+											<div class="easy-pie-chart percentage" data-percent="45"
+												data-color="#CA5952"
+												style="height: 72px; width: 72px; line-height: 71px; color: rgb(202, 89, 82);">
+												<span class="percent">45</span>%
+												<canvas height="72" width="72"></canvas>
+											</div>
+
+											<div class="space-2"></div>
+											Graphic Design
+										</div>
+
+										<div class="grid3 center">
+											<div class="center easy-pie-chart percentage"
+												data-percent="90" data-color="#59A84B"
+												style="height: 72px; width: 72px; line-height: 71px; color: rgb(89, 168, 75);">
+												<span class="percent">90</span>%
+												<canvas height="72" width="72"></canvas>
+											</div>
+
+											<div class="space-2"></div>
+											HTML5 &amp; CSS3
+										</div>
+
+										<div class="grid3 center">
+											<div class="center easy-pie-chart percentage"
+												data-percent="80" data-color="#9585BF"
+												style="height: 72px; width: 72px; line-height: 71px; color: rgb(149, 133, 191);">
+												<span class="percent">80</span>%
+												<canvas height="72" width="72"></canvas>
+											</div>
+
+											<div class="space-2"></div>
+											Javascript/jQuery
+										</div>
+									</div>
+
+									<div class="hr hr-16"></div>
+
+									<div class="profile-skills">
+										<div class="progress">
+											<div class="progress-bar" style="width: 80%">
+												<span class="pull-left">HTML5 &amp; CSS3</span> <span
+													class="pull-right">80%</span>
+											</div>
+										</div>
+
+										<div class="progress">
+											<div class="progress-bar progress-bar-success"
+												style="width: 72%">
+												<span class="pull-left">Javascript &amp; jQuery</span> <span
+													class="pull-right">72%</span>
+											</div>
+										</div>
+
+										<div class="progress">
+											<div class="progress-bar progress-bar-purple"
+												style="width: 70%">
+												<span class="pull-left">PHP &amp; MySQL</span> <span
+													class="pull-right">70%</span>
+											</div>
+										</div>
+
+										<div class="progress">
+											<div class="progress-bar progress-bar-warning"
+												style="width: 50%">
+												<span class="pull-left">Wordpress</span> <span
+													class="pull-right">50%</span>
+											</div>
+										</div>
+
+										<div class="progress">
+											<div class="progress-bar progress-bar-danger"
+												style="width: 38%">
+												<span class="pull-left">Photoshop</span> <span
+													class="pull-right">38%</span>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- /#home -->
+			
+			<div id="edit-info" class="tab-pane">
+				<form action="${ctxPath!}/userCenter/updateInfo" method="post" id="sysuser-update-form" class="padding-10">
+					<table class="EditTable">
+						<tbody>
+							<tr class="FormData">
+								<td class="CaptionTD">登录名：</td>
+								<td class="DataTD width-100">
+								<input type="text" class="width-60"  value="${sysUser.username!}" 
+								disabled="disabled" />
+								<span class="red">*登录名不可修改</span>
+								</td>
+							</tr>
+							<tr class="FormData">
+								<td class="CaptionTD">密码：</td>
+								<td class="DataTD">
+								<input type="password" class="width-60" name="password"/>
+								<span class="red">*不填写则不修改密码</span>
+								</td>
+							</tr>
+							<tr class="FormData">
+								<td class="CaptionTD">确认密码：</td>
+								<td class="DataTD">
+								<input type="password" class="width-60" name="repassword" 
+					 dataType="*0-16" recheck="password" errormsg="您两次输入的密码不一致！" />
+							<span class="red">*不填写则不修改密码</span>
+								</td>
+							</tr>
+							<tr class="FormData">
+								<td class="CaptionTD">真实姓名：</td>
+								<td class="DataTD width-100">
+								<input type="text" class="width-60" name="name"
+								value="${sysUser.name!}" datatype="*"  nullmsg="请输入姓名！"/>
+								</td>
+							</tr>
+							<tr class="FormData">
+								<td class="CaptionTD">邮箱：</td>
+								<td class="DataTD width-100">
+								<input type="text" class="width-60" value="${sysUser.email!}" name="email" />
+								</td>
+							</tr>
+							<tr class="FormData">
+								<td class="CaptionTD">电话：</td>
+								<td class="DataTD width-100">
+								<input type="text" class="width-60" value="${sysUser.phone!}" name="phone"/>
+								</td>
+							</tr>
+							<tr class="FormData">
+								<td class="CaptionTD">手机：</td>
+								<td class="DataTD width-100">
+								<input type="text" class="width-60" value="${sysUser.mobile!}" name="mobile"/>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<h3 class="red center">为了确保账号安全，修改成功后，自动跳转到登录界面，重新登录</h3>
+					<div class="margin-t15">
+						<span class="btn btn-info btn-block bigger-120" id="sysuser-update-btn">确 认 修 改</span>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<#save isHide="yes" subBtnId="sysuser-update-btn" formId="sysuser-update-form" />

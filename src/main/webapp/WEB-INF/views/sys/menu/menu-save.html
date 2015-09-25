@@ -1,0 +1,138 @@
+<script type="text/javascript">
+	$(function(){
+	   //初始化单选
+	   var resourceType='${sysResource.type!0}',common = '${sysResource.common!0}',
+	   status = '${sysResource.status!0}';
+	   $("input:radio[name=type][value="+resourceType+"]")[0].checked=true;
+	   $("input:radio[name=common][value="+common+"]")[0].checked=true;
+	   $("input:radio[name=status][value="+status+"]")[0].checked=true;
+	});
+</script>
+
+<div class="layer">
+	<form name="FormPost" id="menu-save" class="FormGrid"  method="post"
+		action="${ctxPath}/menu/save">
+		
+		<input type="hidden" value="${sysResource.id!}" name="id"/>
+		<input type="hidden" value="${pResource.parentIds!}" name="parentIds" />
+		<input type="hidden" value="${sysResource.parentIds!}" name="oldParentIds" />
+		
+		<table class="EditTable" width="100%">
+			<tbody>
+				<tr style="display: none;">
+					<td class="ui-state-error" id="FormError"></td>
+				</tr>
+				<tr class="FormData">
+					<td class="CaptionTD">菜单名称</td>
+					<td class="DataTD width-100"><input type="text"
+						name="name" datatype="*"  nullmsg="请输入菜单名称！"
+						class="FormElement ui-widget-content ui-corner-all"
+						value="${sysResource.name!}"></td>
+				</tr>
+				<tr  class="FormData">
+					<td class="CaptionTD">菜单链接</td>
+					<td class="DataTD"><span class="red" style="width:30%">${ctxPath!}/</span>
+						<input type="text" style="width:58%" id="name" name="url" role="textbox"
+						class="FormElement ui-widget-content ui-corner-all"
+						value="${sysResource.url!}" 
+						placeholder=""></td>
+				</tr>
+				<tr class="FormData">
+					<td class="CaptionTD">父级菜单</td>
+					<td class="DataTD">
+					<#treeselect url="menu/tree" modelNameValue="${pResource.name!}" 
+							modelIdValue="${pResource.id!0}" selectIds="${pResource.id!}"
+							curId="${sysResource.id!}" />
+					</td>
+				</tr>
+				<tr class="FormData">
+					<td class="CaptionTD">菜单类型</td>
+					<td class="DataTD">
+						<div class="radio inline">
+							<label>
+								<input name="type" type="radio" class="ace" checked value="0"/>
+								<span class="lbl"> 菜单资源 </span>
+							</label>
+						</div>
+						<div class="radio inline">
+							<label>
+								<input name="type" type="radio" class="ace" value="1"/>
+								<span class="lbl"> 按钮资源</span>
+							</label>
+						</div>
+					</td>
+				</tr>
+				<tr class="FormData">
+					<td class="CaptionTD">权限类型</td>
+					<td class="DataTD">
+						<div class="radio inline">
+							<label>
+								<input name="common" type="radio" class="ace" checked value="0"/>
+								<span class="lbl"> 权限资源 </span>
+							</label>
+						</div>
+						<div class="radio inline">
+							<label>
+								<input name="common" type="radio" class="ace" value="1"/>
+								<span class="lbl"> 公共资源</span>
+							</label>
+						</div>
+					</td>
+				</tr>
+				<tr class="FormData">
+					<td class="CaptionTD">菜单图标</td>
+					<td class="DataTD">
+					<#iconselect value="${sysResource.icon!}"/>
+					</td>
+				</tr>
+				<tr class="FormData">
+					<td class="CaptionTD">菜单序号</td>
+					<td class="DataTD">
+						<input class="FormElement"
+						id="id_g" type="text" name="sort" value="${sysResource.sort!1}"
+						onkeyup="this.value=this.value.replace(/\D/g,'')" 
+						onafterpaste="this.value=this.value.replace(/\D/g,'')"
+						>
+					</td>
+				</tr>
+				<tr class="FormData">
+					<td class="CaptionTD">使用状态</td>
+					<td class="DataTD">
+						<div class="radio inline">
+							<label>
+								<input name="status" type="radio" class="ace" checked value="0"/>
+								<span class="lbl"> 正常 </span>
+							</label>
+						</div>
+						<div class="radio inline">
+							<label>
+								<input name="status" type="radio" class="ace" value="1"/>
+								<span class="lbl"> 禁用</span>
+							</label>
+						</div>
+					</td>
+				</tr>
+				<tr class="FormData">
+					<td class="CaptionTD">菜单描述</td>
+					<td class="DataTD">
+						<textarea name="description" class="autosize-transition form-control "
+						style="resize: none;">${sysResource.description!}</textarea>	
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</form>
+</div>
+<#save formId="menu-save" reloadUrl="true"/>
+
+<script type="text/javascript">
+	
+//图标切换改变
+$("#resourceInput").on("input propertychange",function(){
+	var icon = $(this).val();
+	$("#resourceIcon").attr("class","ace-icon fa "+icon+" blue bigger-120");
+}).trigger("change");
+//描述框自动扩张高度
+$('textarea[class*=autosize]').autosize({append: "\n"});
+
+</script>

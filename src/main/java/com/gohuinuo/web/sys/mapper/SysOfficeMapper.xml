@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gohuinuo.web.sys.mapper.SysOfficeMapper">
+
+	<sql id="sysOfficeColumns">
+		id,address,area_id,code,create_by,create_date,del_flag,email,fax,grade,master,
+		name,parent_id,parent_ids,phone,remarks,type,update_by,update_date,zip_code,icon
+	</sql>
+	
+	<sql id="sysOfficeAliasColumns">
+		t1.id,t1.address,t1.area_id,t1.code,t1.create_by,t1.create_date,t1.del_flag,t1.email,t1.fax,t1.grade,t1.master,
+		t1.name,t1.parent_id,t1.parent_ids,t1.phone,t1.remarks,t1.type,t1.update_by,t1.update_date,t1.zip_code,
+		t1.icon
+	</sql>
+	
+	<!-- 修改父节点字符串 -->
+	<update id="updateParentIds">
+		update sys_office
+		set parent_ids = REPLACE(parent_ids, #{oldParentIds}, #{parentIds}) 
+		where parent_ids like CONCAT( '%,' , #{id} , ',%' )  
+	</update>
+	
+	<!-- 根据节点Id删除底下全部子节点包括孙子节点 -->
+	<update id="deleteOfficeByRootId">
+		update sys_office set del_flag=1 where FIND_IN_SET(#{id},parent_ids) or id = #{id}
+	</update>
+	
+	<!-- 根据根节点查询自身及其子孙节点 -->
+	<select id="findOfficeIdsByRootId" resultType="java.lang.Long">
+		SELECT id FROM sys_office WHERE FIND_IN_SET(#{rootId},parent_ids) OR id = #{rootId}
+	</select>
+	
+	<!-- 根据用户的id的到跨机构数据范围 -->
+	<select id="findUserDataScopeByUserId" resultType="java.lang.Long">
+		SELECT DISTINCT so.id FROM sys_office so 
+		LEFT JOIN sys_role_office sro ON so.id = sro.office_id
+		LEFT JOIN sys_user_role sur ON sur.role_id = sro.role_id
+		WHERE sur.user_id = #{userId}
+	</select>
+	
+	<!-- 根据部门id查找公司id -->
+	<select id="findOfficeCompanyIdByDepId" resultType="com.gohuinuo.web.sys.model.SysOffice">
+		SELECT <include refid="sysOfficeColumns"/> FROM sys_office
+		WHERE FIND_IN_SET(id,(SELECT parent_ids FROM sys_office WHERE id = #{depId}))
+		AND type = 1 and del_flag=0
+		ORDER BY grade
+		LIMIT 1
+	</select>
+	
+	<!-- 分页显示筛选查询 -->
+	<select id="findPageInfo" resultType="com.gohuinuo.web.sys.model.SysOffice">
+		select <include refid="sysOfficeAliasColumns"/>,t2.name pname,t2.id pid
+		from sys_office t1
+		left join sys_office t2
+		ON t1.parent_id=t2.id
+		<where>
+			<if test="name != ''">
+				t1.name like concat( '%' , #{name} , '%' )
+			</if>
+			<if test="id != 0 and @Ognl@isBlank(name) and @Ognl@isNotBlank(id) "> 
+				(FIND_IN_SET(#{id},t1.parent_ids) or t1.id = #{id})
+			</if>
+			<if test="@Ognl@isNotBlank(userDataScope)">
+				and ${userDataScope}
+			</if>
+			and t1.del_flag=0
+		</where>
+		ORDER BY t1.update_date desc
+	</select>
+
+</mapper>

@@ -1,0 +1,76 @@
+<div class="widget-box widget-color-green2 ">
+	<div class="widget-header clearfix">
+		<h5 class="widget-title">区域配置</h5>
+		<div class="widget-toolbar">
+			<a href="#" data-action="fullscreen" class="orange2"> 
+				<i class="ace-icon fa fa-expand"></i>
+			</a>
+		</div>
+		<div class="widget-toolbar  width-40" style="padding-top: 2px;">
+			<form method="post" class="form-search" id="search-form" target="list-page"
+				action="${ctxPath}/area/list">
+				<div class="input-group" style="line-height: 0px;">
+					<span class="input-group-btn">
+						<span class=" btn btn-success btn-sm"
+							id="search-all-btn">
+							 显示全部 
+						</span> 
+					</span>
+					
+					<input type="text" class="form-control search-query"
+						name="name" placeholder="区域名称" id="search-input">
+					@if(auth.hasPermission("sys:area:find")){
+					<span class="input-group-btn">
+						<span class="btn  btn-success btn-sm"
+							id="search-btn">
+							搜索 <i class="ace-icon fa fa-search icon-on-right bigger-110"></i>
+						</span>
+					</span>
+					@}
+				</div>
+				<input type="hidden" name="id" />
+			</form>
+		</div>
+		<div class="widget-toolbar">
+			<span class="btn btn-purple btn-xs" 
+			onclick="Angel.downloadFile('search-form','${ctxPath}/area/export')">
+			<i class="ace-icon fa fa-cloud-upload bigger-130"></i>
+			导出Excel</span>
+		</div>
+		<div class="widget-toolbar no-border">
+			<span class="btn btn-purple btn-xs" id="importFile">
+				<i class="ace-icon fa fa-cloud-download bigger-130"></i>
+				<span>导入数据</span>
+				<input type="file" class="phide"  name="excel" 
+				data-url="${ctxPath}/area/import" _accept="application/vnd.ms-excel" 
+				data-progressid="#excel-progress"
+				onchange="Angel.uploadFile.excel(this);"/>
+			</span>
+		</div>
+		<div class="widget-toolbar no-border">
+			<div class="progress progress-striped active pos-rel" style="width:200px;display: none;" 
+			data-percent="0%" id="excel-progress">
+				<div class="progress-bar progress-bar-pink" style="width:0%"></div>
+			</div>
+		</div>
+	</div>
+
+	<div class="widget-body">
+		<div class="widget-main padding-8">
+			<div class="row">
+				<div class="col-sm-3">
+					<div>
+						<ul id="treeMenu" class="ztree"></ul>
+					</div>
+				</div>
+				<div class="col-sm-9" id="list-page">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<#systree editUrl="area/edit/showlayer" delUrl="area/delete" 
+	addUrl="area/add/showlayer" treeData="${treeList}" 
+	rootNodeName="区域列表" />
+	

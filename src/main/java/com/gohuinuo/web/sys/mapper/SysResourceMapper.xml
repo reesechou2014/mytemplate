@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gohuinuo.web.sys.mapper.SysResourceMapper">
+
+	<sql id="sysResourceColumns">
+		id,common,description,icon,name,parent_id,sort,status,type,url,parent_ids,
+		update_by,update_date,create_by,create_date,del_flag
+	</sql>
+
+	<sql id="AliasColumns">
+		sr.id,sr.description,sr.icon,sr.name,sr.parent_id,sr.sort,
+		sr.status,sr.type,sr.url,sr.common,sr.parent_ids,sr.del_flag
+	</sql>
+	
+	<!-- 修改父节点字符串 -->
+	<update id="updateParentIds">
+		update sys_resource
+		set parent_ids = REPLACE(parent_ids, #{oldParentIds}, #{parentIds}) 
+		where parent_ids like CONCAT( '%,' , #{id} , ',%' ) 
+	</update>
+
+	<!-- 根据节点Id删除底下全部子节点包括孙子节点 -->
+	<delete id="deleteIdsByRootId">
+		delete from sys_resource where FIND_IN_SET(#{id},parent_ids) or id = #{id}
+	</delete>
+	
+	<!-- 删除资源前验证 -->
+	<select id="beforeDeleteResource" resultType="java.lang.Integer">
+		select count(1) from sys_role_resource where resource_id = #{resourceId}
+	</select>
+	
+	<!-- 根据用户id获得持有的资源 -->
+	<select id="findUserResourceByUserId" resultType="com.gohuinuo.web.sys.model.SysResource">
+		SELECT DISTINCT res.id,res.url,res.type,res.parent_id,
+			   res.parent_ids,res.name,res.icon,res.sort
+		FROM sys_resource res 
+			LEFT JOIN sys_role_resource srr ON res.id=srr.resource_id
+			LEFT JOIN sys_user_role ur ON ur.role_id=srr.role_id
+		WHERE ur.user_id=#{userId} AND res.del_flag=0 AND res.status=0
+		order by res.sort 
+	</select>
+	
+	<!-- 菜单管理分页显示筛选查询 -->
+	<select id="findPageInfo" resultType="com.gohuinuo.web.sys.model.SysResource">
+		select sr.id,sr.description,sr.icon,sr.name,sr.sort,sr.common,
+		sr.status,sr.type,sr.url,srp.name pname,srp.id pid
+		from sys_resource sr
+		left join sys_resource srp
+		ON sr.parent_id=srp.id
+		<where>
+			<if test="name != ''">
+				sr.name like concat( '%' , #{name} , '%' )
+			</if>
+			<if test="id != 0 and @Ognl@isBlank(name) and @Ognl@isNotBlank(id) "> 
+				FIND_IN_SET(#{id},sr.parent_ids) or sr.id = #{id}
+			</if>
+		</where>
+		ORDER BY sr.update_date desc
+	</select>
+
+</mapper>

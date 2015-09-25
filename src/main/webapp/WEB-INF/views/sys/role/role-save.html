@@ -1,0 +1,78 @@
+@var officeMap = office.getAllOfficeMap();
+@var userDataScopeList = office.getUserDataScope(); //用户数据范围
+<div class="layer">
+	<form name="FormPost" id="role-save" class="FormGrid"  method="post"
+		action="${ctxPath}/role/save">
+		
+		<input type="hidden" value="${sysrole.id!}" name="id"/>
+		<table class="EditTable" width="100%">
+			<tbody>
+				<tr class="FormData">
+					<td class="CaptionTD">归属机构</td>
+					<td class="DataTD width-100">
+						<#treeselect url="office/tree"  
+							modelId="officeId" id="officeEdit" nameId="officeNameEdit"
+							modelNameValue="${officeMap[sysrole.officeId!].name!}" 
+							modelIdValue="${sysrole.officeId!}"
+							isCheck="请选择归属机构" selectIds="${sysrole.officeId!}"/>
+					</td>
+				</tr>
+				<tr class="FormData">
+					<td class="CaptionTD">角色名称</td>
+					<td class="DataTD width-100"><input type="text"
+						name="name" datatype="*"  nullmsg="请输入角色名称！"
+						value="${sysrole.name!}"></td>
+				</tr>
+				<tr class="FormData">
+					<td class="CaptionTD">数据范围</td>
+					<td class="DataTD width-100">
+						<#select id="chosenSelectEdit" name="dataScope" width="40%">
+							@for(item in userDataScopeList){
+								<option value="${item.value!}">${item.label!}</option>
+							@}
+						</#select>
+						<script type="text/javascript">
+							$("#chosenSelectEdit").change(function(){
+								if($(this).val() == 9){
+									$("#treeSelectOfficeEdit").show();
+								}else{
+									$("#treeSelectOfficeEdit").hide();
+								}
+							})
+							$("#chosenSelectEdit option[value='${sysrole.dataScope!}']").attr("selected",true);
+							$("#chosenSelectEdit option[value='${sysrole.dataScope!}']").trigger('change');
+							$("#chosenSelectEdit").trigger("chosen:updated");
+						</script>
+						
+						<span class="red width-50"> 特殊情况下,设置为"按明细设置",可进行跨机构授权</span>
+					</td>
+				</tr>
+				<tr class="FormData">
+					<td class="CaptionTD" style="vertical-align: top;">角色授权</td>
+					<td class="DataTD">
+					<div class="clearfix" style="width: 100%;display: inline-block;vertical-align: top;">
+						<#treeselect url="menu/tree" checked="true" isLayer="false" rootNodeName="权限列表"
+							class="width-50" treeSelectId="treeSelectResEdit" selectIds="${resIds!}" chkboxType="2">
+							<div id="treeSelectResEdit" style="width: 50%;display: inline-block;vertical-align: top;float: left"></div>
+						</#treeselect>
+						<#treeselect url="office/tree" checked="true" isLayer="false" rootNodeName="机构列表"
+							class="width-50" treeSelectId="treeSelectOfficeEdit" selectIds="${officeIds!}"
+							chkboxType="1">
+							<div id="treeSelectOfficeEdit" style="width: 50%;display: inline-block;vertical-align: top;float: right"></div>
+						</#treeselect>
+					</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</form>
+</div>
+<#save formId="role-save" config="true" validId="roleEditForm">
+	var permission = getCheckbox(treeSelectResEdit);
+	var office = getCheckbox(treeSelectOfficeEdit);
+	var data = $("#role-save").serialize()+"&resourceIds="+permission.toString()+
+				"&officeIds="+office.toString();
+	roleEditForm.config({
+		 ajaxpost:{data:data}
+	});
+</#save>

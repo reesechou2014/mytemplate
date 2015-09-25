@@ -1,0 +1,97 @@
+<div class="layer">
+	<div class="col-sm-9">
+		<div class="widget-box">
+			<div class="widget-body">
+				<div class="widget-main no-padding">
+					<!-- #section:pages/dashboard.conversations -->
+					<div class="dialogs">
+						<div class="itemdiv dialogdiv">
+							<div class="user">
+								<img alt="Alexa's Avatar" src="${ctxPath}/static/img/small-female-pic.png" />
+							</div>
+
+							<div class="body">
+								<div class="time">
+									<i class="ace-icon fa fa-clock-o"></i> 
+									<span class="green">10:10:01</span>
+								</div>
+
+								<div class="name">
+									<a href="#">Alexa</a>
+								</div>
+								<div class="text">Lorem ipsum dolor sit amet, consectetur
+									adipiscing elit. Quisque commodo massa sed ipsum porttitor
+									facilisis.</div>
+
+								<div class="tools">
+									<a href="#" class="btn btn-minier btn-info"> <i
+										class="icon-only ace-icon fa fa-share"></i>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- /section:pages/dashboard.conversations -->
+					<form>
+						<div class="form-actions">
+							<div class="input-group">
+								<input placeholder="Type your message here ..." type="text"
+									class="form-control" name="message" /> <span
+									class="input-group-btn">
+									<button class="btn btn-sm btn-info no-radius" type="button">
+										<i class="ace-icon fa fa-share"></i> Send
+									</button>
+								</span>
+							</div>
+						</div>
+					</form>
+				</div>
+				<!-- /.widget-main -->
+			</div>
+			<!-- /.widget-body -->
+		</div>
+		<!-- /.widget-box -->
+	</div>
+	<div class="col-sm-3">
+		<div class="widget-box transparent ui-sortable-handle">
+			<div class="widget-header">
+				<h4 class="widget-title lighter">在线用户</h4>
+
+				<div class="widget-toolbar no-border">
+					<a href="#" data-action="reload"> <i
+						class="ace-icon fa fa-refresh"></i>
+					</a> <a href="#" data-action="collapse"> <i
+						class="ace-icon fa fa-chevron-up"></i>
+					</a>
+				</div>
+			</div>
+
+			<div class="widget-body" style="display: block;">
+				<div class="widget-main padding-6 no-padding-left no-padding-right">
+					<div class="dialogs">
+					<div class="itemdiv commentdiv">
+						<div class="user">
+							<img alt="Bob Doe's Avatar" src="${ctxPath}/static/img/small-female-pic.png">
+						</div>
+
+						<div class="body">
+							<div class="name">
+								<a href="#">Bob Doe (项目经理)</a>
+							</div>
+							<div class="name">127.0.0.1</div>
+						</div>
+
+					</div>
+					
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+$('.dialogs').ace_scroll({
+	size: $(window).height()-150
+});
+</script>

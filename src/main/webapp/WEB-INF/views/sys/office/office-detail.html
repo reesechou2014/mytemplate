@@ -1,0 +1,101 @@
+@var area = getAllArea(); //全部区域
+<div class="layer">
+<div class="profile-user-info profile-user-info-striped" >
+	<div class="profile-info-row">
+		<div class="profile-info-name">机构名称</div>
+		<div class="profile-info-value">
+			${office.name!}
+		</div>
+	</div>
+	<div class="profile-info-row">
+		<div class="profile-info-name">机构类型</div>
+		<div class="profile-info-value">
+			${dict.getDictByTypeAndValue("sys_office_type",office.type).label}
+		</div>
+	</div>
+	<div class="profile-info-row">
+		<div class="profile-info-name">上级机构</div>
+		<div class="profile-info-value">
+			${pOffice.name!}
+		</div>
+	</div>
+	<div class="profile-info-row">
+		<div class="profile-info-name">归属区域</div>
+		<div class="profile-info-value">
+			${area[office.areaId].name!}
+		</div>
+	</div>
+	<div class="profile-info-row">
+		<div class="profile-info-name">图标</div>
+		<div class="profile-info-value">
+			<i class="ace-icon ${office.icon!} blue bigger-120"></i>
+		</div>
+	</div>
+	<div class="profile-info-row">
+		<div class="profile-info-name">负责人</div>
+		<div class="profile-info-value">
+			${office.master!}
+		</div>
+	</div>
+	<div class="profile-info-row">
+		<div class="profile-info-name">电话</div>
+		<div class="profile-info-value">
+			${office.phone!}
+		</div>
+	</div>
+	<div class="profile-info-row">
+		<div class="profile-info-name">邮箱</div>
+		<div class="profile-info-value">
+			${office.email!}
+		</div>
+	</div>
+	<div class="profile-info-row">
+		<div class="profile-info-name">联系地址</div>
+		<div class="profile-info-value">
+			${office.address!}
+		</div>
+	</div>
+	<div class="profile-info-row">
+		<div class="profile-info-name">邮政编码</div>
+		<div class="profile-info-value">
+			${office.zip_code!}
+		</div>
+	</div>
+	<div class="profile-info-row">
+		<div class="profile-info-name">传真</div>
+		<div class="profile-info-value">
+			${office.fax!}
+		</div>
+	</div>
+	<div class="profile-info-row">
+		<div class="profile-info-name">创建者</div>
+		<div class="profile-info-value">
+			${office.createBy!}
+		</div>
+	</div>
+	<div class="profile-info-row">
+		<div class="profile-info-name">创建时间</div>
+		<div class="profile-info-value">
+			${office.createDate!}
+		</div>
+	</div>
+	<div class="profile-info-row">
+		<div class="profile-info-name">更新者</div>
+		<div class="profile-info-value">
+			${office.updateBy!}
+		</div>
+	</div>
+	<div class="profile-info-row">
+		<div class="profile-info-name">更新时间</div>
+		<div class="profile-info-value">
+			${office.updateDate!}
+		</div>
+	</div>
+	<div class="profile-info-row">
+		<div class="profile-info-name">备注</div>
+		<div class="profile-info-value">
+			${office.remarks!}
+		</div>
+	</div>
+</div>
+</div>

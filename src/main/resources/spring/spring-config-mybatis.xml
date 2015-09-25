@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans.xsd 
+		http://www.springframework.org/schema/tx 
+		http://www.springframework.org/schema/tx/spring-tx.xsd 
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/aop
+		http://www.springframework.org/schema/aop/spring-aop.xsd"
+	default-lazy-init="false">
+
+	<!-- mybatis配置 -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="configLocation" value="classpath:mybatis/mybatis-sqlconfig.xml" />
+		<property name="mapperLocations" value="classpath:com/gohuinuo/web/**/*.xml" />
+		<property name="plugins">
+			<array>
+				<!-- 转驼峰拦截器 -->
+				<bean class="com.gohuinuo.common.mybatis.CameHumpInterceptor"/>
+				<!-- 分页拦截器 -->
+				<bean class="com.github.pagehelper.PageHelper">
+					<property name="properties">
+						<value>
+							dialect=mysql
+							reasonable=true
+						</value>
+					</property>
+				</bean>
+			</array>
+		</property>
+	</bean>
+
+	<!-- 自动扫描映射器 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.gohuinuo.**.mapper,com.github.abel533.entity.mapper" />
+	</bean>
+	
+	<bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate"
+		scope="prototype">
+		<constructor-arg index="0" ref="sqlSessionFactory" />
+	</bean>
+
+	<!-- 定义entityMapper方便直接使用 -->
+	<bean id="entityMapper" class="com.github.abel533.entity.EntityMapper" scope="prototype">
+	    <!-- 使用构造参数引用commonMapper -->
+	    <constructor-arg ref="commonMapper"/>
+	</bean>
+	
+	<bean id="sqlMapper" class="com.github.abel533.sql.SqlMapper" scope="prototype">
+		<constructor-arg ref="sqlSession"/>
+	</bean>
+
+	<!-- 通用crud -->
+	<bean class="com.github.abel533.mapperhelper.MapperHelper"
+				depends-on="sqlSession" init-method="initMapper" scope="singleton" lazy-init="false">
+		<property name="mappers">
+			<array>
+				<value>com.github.abel533.mapper.Mapper</value>
+			</array>
+		</property>
+		<property name="sqlSessions" ref="sqlSession"/>
+		<property name="notEmpty" value="true"/>
+	</bean>
+
+
+</beans>

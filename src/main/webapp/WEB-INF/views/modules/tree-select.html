@@ -1,0 +1,158 @@
+<script>
+@var tree = treeSelectId!(id+'tree');
+@var setting = (treeSelectId!id)+"setting";
+var key, lastValue = "", nodeList = [];
+var ${tree}, ${setting} = {
+		view:{selectedMulti:false,expandSpeed:100},
+		check:{enable:${checked!'false'},nocheckInherit:true},
+		data:{
+			simpleData:{
+				enable:true,
+				idKey:"${idKey!'id'}",
+				pIdKey:"${pIdKey!'parentId'}"
+			},
+			key:{url:"abcd11"}
+		},
+		view:{
+			fontCss:function(treeId, treeNode) {
+				return (!!treeNode.highlight) ? {"font-weight":"bold","color":"red"} : {"font-weight":"normal","color":"#333"};
+			}
+		},
+		callback:{
+			beforeClick:function(id, node){
+				if("${checked!}" == "true"){
+					${tree}.checkNode(node, !node.checked, true, true);
+					return false;
+				}
+			}
+		}
+};
+$(document).ready(function(){
+	$.post("${url}", function(zNodes){
+		@if(auth.hasAllDataScope() || auth.isSuper()){
+		var rootName = '${decode(rootNodeName,"","全部",rootNodeName)}';
+		var root = {id:0,name:rootName,open:true};
+		zNodes[zNodes.length] = root;
+		@}
+		// 初始化树结构
+		${tree} = $.fn.zTree.init($("#select-tree${treeSelectId!}"), ${setting}, zNodes);
+		@if(chkboxType == "1"){
+			${tree}.setting.check.chkboxType = { "Y" : "s", "N" : "s" };
+		@}else if(chkboxType == "2"){
+			${tree}.setting.check.chkboxType = { "Y": "ps", "N": "s"  };
+		@}
+		
+		// 默认展开一级节点
+		var nodes = ${tree}.getNodesByParam("level", 0);
+		for(var i=0; i<nodes.length; i++) {
+			${tree}.expandNode(nodes[i], true, false, false);
+		}
+		// 默认选择节点
+		var ids = "${selectIds!}".replace('[','').replace(']','').split(",");
+		for(var i=0; i<ids.length; i++) {
+			var node = ${tree}.getNodeByParam("id", ids[i]);
+			if("${checked!}" == "true"){
+				try{${tree}.checkNode(node, true, false);}catch(e){}
+				${tree}.expandNode(node, true, false, false);
+			}else{
+				${tree}.selectNode(node, true);
+			}
+		}
+		
+	});
+	key = $("#key");
+	key.bind("focus", focusKey).bind("blur", blurKey)
+	.bind("change keydown cut input propertychange", searchNode);
+	$("#${id}-save").click(function(){
+		node = ${tree}.getSelectedNodes()[0];
+		if(undefined == node || null == node){
+			tip.errorTip("请选择一个节点",$("#select-tree"));
+			return false;
+		}
+		if("${curId}" == node.id){
+			tip.errorTip("不能选择自己",$("#select-tree"));
+			return false;
+		}
+		if(node.id == 0){
+			node['name']="";
+		}
+		$("#${nameId}").val(node.name);
+		$("#${id}").val(node["${idKey!'id'}"]);
+		if("${curId}" != -1){
+			$("input[name='parentIds']").val(node.parentIds);
+		}
+		layer.close(lastIndex);
+		layer.close(layer.index);
+	});
+});
+
+function getCheckbox(tree){
+	var ids = [], nodes = tree.getCheckedNodes(true);
+	for(var i=0; i<nodes.length; i++) {
+		var id = nodes[i]["${idKey!'id'}"];
+		if(id != 0) ids.push(id);
+	}
+	return ids;
+}
+
+function focusKey(e) {
+	if (key.hasClass("empty")) {
+		key.removeClass("empty");
+	}
+};
+function blurKey(e) {
+	if (key.get(0).value === "") {
+		key.addClass("empty");
+	}
+	searchNode(e);
+};
+function searchNode(e) {
+	// 取得输入的关键字的值
+	var value = $.trim(key.get(0).value);
+	
+	// 按名字查询
+	var keyType = "name";
+	if (key.hasClass("empty")) {
+		value = "";
+	}
+	
+	// 如果和上次一次，就退出不查了。
+	if (lastValue === value) {
+		return;
+	}
+	
+	// 保存最后一次
+	lastValue = value;
+	
+	// 如果要查空字串，就退出不查了。
+	if (value === "") {
+		return;
+	}
+	updateNodes(false);
+	nodeList = ${tree}.getNodesByParamFuzzy(keyType, value);
+	updateNodes(true);
+};
+function updateNodes(highlight) {
+	for(var i=0, l=nodeList.length; i<l; i++) {
+		nodeList[i].highlight = highlight;				
+		${tree}.updateNode(nodeList[i]);
+		${tree}.expandNode(nodeList[i].getParentNode(), true, false, false);
+	}
+};
+</script>
+<div>
+@if(isLayer == "true"){
+	<div id="search" class="control-group" style="padding:10px 0 0 15px;">
+		<label for="key" class="control-label" style="float:left;padding:5px 5px 3px;">关键字：</label>
+		<input type="text" class="empty" id="key" name="key" maxlength="50" style="width:75%;">
+	</div>
+@}
+	<ul id="select-tree${treeSelectId!}" class="ztree" style="padding:15px 20px;"></ul>
+@if(isLayer == "true"){
+	<div class="width-100" tag-save-btn style="padding-top: 15px; bottom: 0px; position:absolute;">
+		<span class="btn btn-primary btn-sm bigger-110 btn-block" id="${id}-save">
+			确 定
+		</span>
+	</div>
+@}
+</div>

@@ -1,0 +1,46 @@
+<div class="layer">
+	<div class="profile-user-info profile-user-info-striped wordbreak">
+		<div class="profile-info-row">
+			<div class="profile-info-name">类型</div>
+			<div class="profile-info-value">
+				${dict.getDictByTypeAndValue("sys_log_type",sysLog.type).label}
+			</div>
+		</div>
+		<div class="profile-info-row">
+			<div class="profile-info-name">异常</div>
+			<div class="profile-info-value">${sysLog.exception!}</div>
+		</div>
+		<div class="profile-info-row">
+			<div class="profile-info-name">描述</div>
+			<div class="profile-info-value">${sysLog.description!}</div>
+		</div>
+		<div class="profile-info-row">
+			<div class="profile-info-name">操作方式</div>
+			<div class="profile-info-value">${sysLog.method!}</div>
+		</div>
+		<div class="profile-info-row">
+			<div class="profile-info-name">参数</div>
+			<div class="profile-info-value">${sysLog.params!}</div>
+		</div>
+		<div class="profile-info-row">
+			<div class="profile-info-name">请求URI</div>
+			<div class="profile-info-value">${sysLog.requestUri!}</div>
+		</div>
+		<div class="profile-info-row">
+			<div class="profile-info-name">创建者</div>
+			<div class="profile-info-value">${sysLog.createBy!}</div>
+		</div>
+		<div class="profile-info-row">
+			<div class="profile-info-name">创建时间</div>
+			<div class="profile-info-value">${sysLog.createDate!}</div>
+		</div>
+		<div class="profile-info-row">
+			<div class="profile-info-name">操作IP地址</div>
+			<div class="profile-info-value">${sysLog.remoteAddr!}</div>
+		</div>
+		<div class="profile-info-row">
+			<div class="profile-info-name">用户代理</div>
+			<div class="profile-info-value">${sysLog.userAgent!}</div>
+		</div>
+	</div>
+</div>

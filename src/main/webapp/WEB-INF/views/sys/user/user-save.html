@@ -1,0 +1,102 @@
+@var userOffice = office.getUserOfficeList(); //用户持有的机构
+<div class="layer">
+	<form name="FormPost" id="sysuser-save" class="FormGrid"  method="post"
+		action="${ctxPath}/sysuser/save">
+		
+		<input type="hidden" value="${user.id!}" name="id"/>
+		<table class="EditTable" width="100%">
+			<tbody>
+				<tr class="FormData">
+					<td class="CaptionTD">真实姓名</td>
+					<td class="DataTD width-100"><input type="text"
+						name="name" datatype="*"  nullmsg="请输入角色名！"
+						value="${user.name!}"></td>
+				</tr>
+				<tr class="FormData">
+					<td class="CaptionTD">登录名</td>
+					<td class="DataTD">
+					<input type="text" value="${user.username!}" name="username"
+					datatype="*"  nullmsg="请输入登录名！"/>
+					</td>
+				</tr>
+				<tr class="FormData">
+					<td class="CaptionTD">密码</td>
+					<td class="DataTD">
+					<input type="password" value="" name="password" class="width-70"
+					/>
+					<span class="red">*不填写则不修改</span>
+					<!-- datatype="*6-16" errormsg="密码范围在6~16位之间！" -->
+					</td>
+				</tr>
+				<tr class="FormData">
+					<td class="CaptionTD">归属机构</td>
+					<td class="DataTD width-100">
+					<#pullDownTree order="three" treeData="${userOffice}" name="officeId" 
+						value="${user.officeId}" class="width-100" isRoot="false" 
+						rootNodeName="请选择归属机构" />
+					</td>
+				</tr>
+				<tr class="FormData">
+					<td class="CaptionTD">所属角色</td>
+					<td class="DataTD width-100">
+					<select name="roleIds" multiple class="chosen-select tag-input-style" id="user-role-update" data-placeholder="选择角色">
+						@for(entry in rolesMap){
+							@var key = entry.key,role=entry.value;
+							<option value="${role.id!}" 
+								@if(!isEmpty(findUserRoleMap[key])){
+									selected
+								@}
+							>
+							${role.name!}
+							@var sostr = office.getOfficeStrByOfficeId(role.officeId);
+							@if(!isEmpty(sostr)){
+								&nbsp;(${sostr})
+							@}
+							</option>
+						@}
+					</select>
+					</td>
+				</tr>
+				<tr class="FormData">
+					<td class="CaptionTD">电话</td>
+					<td class="DataTD">
+					<input type="text" value="${user.mobile!}" name="moblie"/>
+					</td>
+				</tr>
+				<tr class="FormData">
+					<td class="CaptionTD">手机</td>
+					<td class="DataTD">
+					<input type="text" value="${user.phone!}" name="phone"/>
+					</td>
+				</tr>
+				<tr class="FormData">
+					<td class="CaptionTD">邮箱</td>
+					<td class="DataTD">
+					<input type="text" value="${user.email!}" name="email"/>
+					</td>
+				</tr>
+				<tr class="FormData">
+					<td class="CaptionTD">工号</td>
+					<td class="DataTD">
+					<input type="text" value="${user.no!}" name="no"/>
+					</td>
+				</tr>
+				<tr class="FormData">
+					<td class="CaptionTD">描述</td>
+					<td class="DataTD">
+						<textarea name="remarks" class="autosize-transition form-control "
+						style="resize: none;">${user.remarks!}</textarea>	
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</form>
+</div>
+<#save formId="sysuser-save" />
+
+<script type="text/javascript">
+
+//描述框自动扩张高度
+$('textarea[class*=autosize]').autosize({append: "\n"});
+$("#user-role-update").chosen({width: "100%",search_contains: true}); 
+</script>

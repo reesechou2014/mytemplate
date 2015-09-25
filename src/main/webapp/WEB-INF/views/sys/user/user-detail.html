@@ -1,0 +1,120 @@
+<div class="layer">
+<div class="profile-user-info profile-user-info-striped" >
+	<div class="profile-info-row">
+		<div class="profile-info-name">姓名</div>
+		<div class="profile-info-value">
+			<span class="editable editable-click">${user.name!}</span>
+		</div>
+	</div>
+	<div class="profile-info-row">
+		<div class="profile-info-name">归属机构</div>
+		<div class="profile-info-value">
+			<span class="editable editable-click">
+			@var useroffice = office.getOfficeStrByOfficeId(user.officeId);
+			@if(!isEmpty(useroffice)){
+			&nbsp;(${useroffice})
+			@}
+			</span>
+		</div>
+	</div>
+	<div class="profile-info-row">
+		<div class="profile-info-name">角色</div>
+		<div class="profile-info-value">
+			<span class="editable editable-click">
+			@for(role in roles){
+				@if(isEmpty(role)) continue;
+				${role.name!}
+				@var sostr = office.getOfficeStrByOfficeId(role.officeId);
+				@if(!isEmpty(sostr)){
+				&nbsp;(${sostr})${decode(roleLP.last,true,"","，")}
+				@}
+			@}
+			</span>
+		</div>
+	</div>
+	<div class="profile-info-row">
+		<div class="profile-info-name">登录名</div>
+		<div class="profile-info-value">
+			<span class="editable editable-click">
+			${user.username!}
+			</span>
+		</div>
+	</div>
+	<div class="profile-info-row">
+		<div class="profile-info-name">电话</div>
+		<div class="profile-info-value">
+			<span class="editable editable-click">${user.mobile!}</span>
+		</div>
+	</div>
+	<div class="profile-info-row">
+		<div class="profile-info-name">手机</div>
+		<div class="profile-info-value">
+			<span class="editable editable-click">
+			${user.phone!}
+			</span>
+		</div>
+	</div>
+	<div class="profile-info-row">
+		<div class="profile-info-name">邮箱</div>
+		<div class="profile-info-value">
+			<span class="editable editable-click">
+			${user.email!}
+			</span>
+		</div>
+	</div>
+	<div class="profile-info-row">
+		<div class="profile-info-name">工号</div>
+		<div class="profile-info-value">
+			<span class="editable editable-click">
+			${user.no!}
+			</span>
+		</div>
+	</div>
+	<div class="profile-info-row">
+		<div class="profile-info-name">最后登录IP</div>
+		<div class="profile-info-value">
+			<span class="editable editable-click">
+			${user.loginIp!}
+			</span>
+		</div>
+	</div>
+	<div class="profile-info-row">
+		<div class="profile-info-name">最后登录时间</div>
+		<div class="profile-info-value">
+			<span class="editable editable-click">
+			${user.loginDate!,dateFormat="yyyy-MM-dd HH:mm:ss"}
+			</span>
+		</div>
+	</div>
+	<div class="profile-info-row">
+		<div class="profile-info-name">创建时间</div>
+		<div class="profile-info-value">
+			<span class="editable editable-click">
+			${user.createDate!,dateFormat="yyyy-MM-dd HH:mm:ss"}
+			</span>
+		</div>
+	</div>
+	<div class="profile-info-row">
+		<div class="profile-info-name">更新者</div>
+		<div class="profile-info-value">
+			<span class="editable editable-click">
+			${user.updateBy!}
+			</span>
+		</div>
+	</div>
+	<div class="profile-info-row">
+		<div class="profile-info-name">更新时间</div>
+		<div class="profile-info-value">
+			<span class="editable editable-click">
+			${user.updateDate!,dateFormat="yyyy-MM-dd HH:mm:ss"}
+			</span>
+		</div>
+	</div>
+	<div class="profile-info-row">
+		<div class="profile-info-name">备注</div>
+		<div class="profile-info-value">
+			<span class="editable editable-click">${user.remarks!}</span>
+		</div>
+	</div>
+</div>
+</div>

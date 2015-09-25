@@ -1,0 +1,64 @@
+<div class="layer">
+<div class="profile-user-info profile-user-info-striped" >
+	<div class="profile-info-row">
+		<div class="profile-info-name">名称</div>
+		<div class="profile-info-value">
+			${area.name!}
+		</div>
+	</div>
+	<div class="profile-info-row">
+		<div class="profile-info-name">区域编码</div>
+		<div class="profile-info-value">
+			${area.code!}
+		</div>
+	</div>
+	<div class="profile-info-row">
+		<div class="profile-info-name">区域类型</div>
+		<div class="profile-info-value">
+			${dict.getDictByTypeAndValue("sys_area_type",area.type).label}
+		</div>
+	</div>
+	<div class="profile-info-row">
+		<div class="profile-info-name">上级区域</div>
+		<div class="profile-info-value">
+			${pArea.name!}
+		</div>
+	</div>
+	<div class="profile-info-row">
+		<div class="profile-info-name">图标</div>
+		<div class="profile-info-value">
+			<i class="ace-icon ${area.icon!} blue bigger-120"></i>
+		</div>
+	</div>
+	<div class="profile-info-row">
+		<div class="profile-info-name">创建者</div>
+		<div class="profile-info-value">
+			${area.createBy!}
+		</div>
+	</div>
+	<div class="profile-info-row">
+		<div class="profile-info-name">创建时间</div>
+		<div class="profile-info-value">
+			${area.createDate!}
+		</div>
+	</div>
+	<div class="profile-info-row">
+		<div class="profile-info-name">更新者</div>
+		<div class="profile-info-value">
+			${area.updateBy!}
+		</div>
+	</div>
+	<div class="profile-info-row">
+		<div class="profile-info-name">更新时间</div>
+		<div class="profile-info-value">
+			${area.updateDate!}
+		</div>
+	</div>
+	<div class="profile-info-row">
+		<div class="profile-info-name">备注</div>
+		<div class="profile-info-value">
+			${area.remarks!}
+		</div>
+	</div>
+</div>
+</div>

@@ -1,0 +1,77 @@
+<table class="table table-striped table-bordered table-hover nomargin-bottom">
+	<thead>
+		<tr>
+			<th class="center">ID</th>
+			<th class="center">名称</th>
+			<th class="center">链接</th>
+			<th class="center">上级菜单</th>
+			<th class="center">资源类型</th>
+			<th class="center">权限类型</th>
+			<th class="center">图标</th>
+			<th class="center">排序号</th>
+			<th class="center">使用状态</th>
+			<th class="center">操作</th>
+		</tr>
+	</thead>
+
+	<tbody>
+		@for(menu in page.list){
+			<tr>
+				<td class="center">${menu.id!}</td>
+				<td class="center">
+					<a href="javascript:;" 
+						data-title="${menu.name!}详情" data-mode="detail"
+						data-url="${ctxPath}/menu/detail/showlayer"
+						data-data="{id:'${menu.id}'}" >
+					${menu.name!}</a>
+				</td>
+				<td class="center">
+					${ menu.url!}
+				</td>
+				<td class="center">
+					${menu.pname! }
+				</td>
+				<td class="center">
+					${decode(menu.type!,'0','菜单资源','按钮资源')}
+				</td>
+				<td class="center">
+					${decode(menu.common!,'0','权限','公共')}
+				</td>
+				<td class="center">
+					@if(isEmpty(menu.icon)){
+						<span class='pink'>无</span>
+					@}else{
+						<i class='ace-icon fa ${menu.icon} blue bigger-120'></i>
+					@}
+				</td>
+				<td class="center">
+					${menu.sort!}
+				</td>
+				<td class="center">${decode(menu.status!,'0',"正常","禁用")}</td>
+				<td class="center">
+					<div class="hidden-sm hidden-xs action-buttons">
+						<a class="green" href="javascript:void(0);" 
+							data-mode="page" data-title="${menu.name!}编辑"
+							data-url="${ctxPath}/menu/edit/showlayer"
+							data-data="{id:'${menu.id}',parentId:'${menu.pid}'}"
+							data-width="50%"
+						>
+							<i class="ace-icon fa fa-pencil bigger-130"></i>
+						</a>
+
+						<a class="red" href="javascript:void(0);" 
+							data-mode="del" data-title="删除操作"
+							data-msg="你确定删除<${menu.name!}>节点及其所有的子节点吗?(慎重操作)"
+							data-url="${ctxPath}/menu/delete" data-data="{id:'${menu.id}'}"
+							data-reloadurl="true"
+						>
+							<i class="ace-icon fa fa-trash-o bigger-130"></i>
+						</a>
+					</div>
+				</td>
+			</tr>
+		@}
+	</tbody>
+</table>
+<div class="space-8"></div>
+<#paginate page="${page}" />
